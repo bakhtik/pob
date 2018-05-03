@@ -8,6 +8,7 @@ import (
 
 type Configuration struct {
 	Address string
+	Static  string
 }
 
 var config Configuration
