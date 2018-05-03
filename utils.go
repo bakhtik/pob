@@ -11,9 +11,15 @@ type Configuration struct {
 }
 
 var config Configuration
+var logger *log.Logger
 
 func init() {
 	loadConfig()
+	file, err := os.OpenFile("pob.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		log.Fatalln("Failed to open log file", err)
+	}
+	logger = log.New(file, "INFO ", log.Ldate|log.Ltime|log.Lshortfile)
 }
 
 func loadConfig() {

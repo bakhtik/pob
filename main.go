@@ -6,7 +6,5 @@ import (
 )
 
 func main() {
-
 	log.Fatal(http.ListenAndServe(config.Address, nil))
-
 }
