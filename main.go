@@ -13,5 +13,7 @@ func main() {
 	files := http.FileServer(http.Dir(config.Static))
 	http.Handle("/static/", http.StripPrefix("/static/", files))
 
+	http.HandleFunc("/", index)
+
 	log.Fatal(http.ListenAndServe(config.Address, nil))
 }
