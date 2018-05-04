@@ -7,6 +7,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/bakhtik/pob/data"
 )
 
 type Configuration struct {
@@ -47,6 +49,18 @@ func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string) 
 
 	templates := template.Must(template.ParseFiles(files...))
 	templates.ExecuteTemplate(w, "layout", data)
+}
+
+// Check if the user is logged in and has a session, if not err is not nil
+func session(r *http.Request) (sess data.Session, err error) {
+	cookie, err := r.Cookie("_cookie")
+	if err == nil {
+		sess = data.Session{Uuid: cookie.Value}
+		if err = sess.Check(); err != nil {
+			err = fmt.Errorf("Invalid session: %s", err)
+		}
+	}
+	return
 }
 
 // logging helpers

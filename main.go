@@ -14,6 +14,8 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", files))
 
 	http.HandleFunc("/", index)
+	http.HandleFunc("/login", login)
+	http.HandleFunc("/signup", signup)
 
 	log.Fatal(http.ListenAndServe(config.Address, nil))
 }
